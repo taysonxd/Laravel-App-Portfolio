@@ -1,7 +1,21 @@
 @csrf
-<div class="custom-file">
+@if($project->image)
+	<img class="card-img-top mb-2" style="height: 400px; object-fit: cover;" src="/storage/{{ $project->image }}">
+@endif
+<div class="custom-file mb-2">
   <input name="image" type="file" class="custom-file-input" id="customFile">
   <label class="custom-file-label" for="customFile">Choose file</label>
+</div>
+<div class="form-group">
+	<label for="category_id">
+		Categoria
+	</label>
+	<select id="category_id" name="category_id" class="form-control bg-light shadow-sm border-0">
+		<option>Seleccione...</option>
+		@foreach($categories as $id => $name)
+			<option value="{{ $id }}" @if($id == old('category_id', $project->category_id)) selected @endif>{{ $name }}</option>
+		@endforeach
+	</select>
 </div>
 <div class="form-group">
 	<label for="title">

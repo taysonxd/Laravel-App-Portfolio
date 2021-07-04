@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+// DB::listen(function($query) {
+// 	var_dump($query->sql);
+// });
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +32,8 @@ Route::resource('projects', 'ProjectsController');
 
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
+
+Route::get('/categories/{category}', 'CategoriesController@show')->name('categories.show');
 
 Route::post('contact', 'MessagesController@store')->name('contact.store');
 

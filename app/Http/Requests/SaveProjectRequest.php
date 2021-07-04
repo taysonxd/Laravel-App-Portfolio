@@ -23,8 +23,16 @@ class SaveProjectRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    {   
         return [
+            'image' => [
+                $this->route('project') ? 'nullable' : 'required',
+                'mimes:jpg,png'
+            ],
+            'category_id' => [
+                'required',
+                'exists:categories,id'
+            ],
             'title' => 'required',
             'slug' => [
                 'required',

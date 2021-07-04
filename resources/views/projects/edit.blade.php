@@ -4,11 +4,11 @@
 
 @section('content')
 <div class="container">
-	<div class="col-12 col-sm-10 col-lg-12 mx-auto">
+	<div class="col-12 col-sm-10 col-lg-8 mx-auto">
 
 		@include('errors.validation-errors')
 
-		<form class="bg-white shadow rounded py-3 px-4" method="POST" action="{{ route('projects.update', $project) }}">
+		<form class="bg-white shadow rounded py-3 px-4" enctype="multipart/form-data" method="POST" action="{{ route('projects.update', $project) }}">
 			@method('PUT')
 			<h1>@lang('Edit the project')</h1>
 			<hr>
