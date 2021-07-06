@@ -30,6 +30,9 @@ Route::resource('projects', 'ProjectsController');
 // Route::put('/projects/{project}', 'ProjectsController@update')->name('projects.update');
 // Route::delete('/projects/{project}', 'ProjectsController@delete')->name('projects.destroy');
 
+Route::patch('/projects/{project}/restore', 'ProjectsController@restore')->name('projects.restore');
+Route::delete('/projects/{project}/force-delete', 'ProjectsController@forceDelete')->name('projects.force-delete');
+
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
 

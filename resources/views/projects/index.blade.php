@@ -13,9 +13,9 @@
 			@else
 				<h1 class="display-4 mb-0">@lang('Projects')</h1>
 			@endisset
-			@auth
+			@can('create', $newProject)
 				<a class="btn btn-primary" href="{{ route('projects.create') }}">@lang('New project')</a>
-			@endauth		
+			@endcan
 		</div>
 		<p class="lead text-secondary">
 			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -52,5 +52,38 @@
 			@endforelse
 			{{ $projects->links() }}
 		</ul>
+		@can('view-trashed-projects')
+			@isset($deletedProjects)
+				<h4 class="mt-4">Proyectos en la papelera de reciclaje</h4>
+				<ul class="list-group">
+					@foreach($deletedProjects as $deletedProject)
+						<li class="list-group-item">
+							<span class="lead">{{ $deletedProject->title }}</span>
+							@can('restore', $deletedProject)
+								<form class="d-inline" method="POST" action="{{ route('projects.restore', $deletedProject) }}">
+									@csrf @method('PATCH')
+									<button class="btn btn-sm btn-info">
+										@lang('Restore')
+									</button>
+								</form>
+							@endcan
+							@can('force-delete', $deletedProject)
+								<form 
+									class="d-inline"
+									method="POST"
+									action="{{ route('projects.force-delete', $deletedProject) }}"
+									onsubmit="return confirm('Esta acción no se puede deshacer, ¿esta seguro de eliminar el proyecto?');"
+								>
+									@csrf @method('DELETE')
+									<button class="btn btn-sm btn-danger">
+										@lang('Permanent delete')
+									</button>
+								</form>
+							@endcan
+						</li>
+					@endforeach
+				</ul>
+			@endisset
+		@endcan
 	</div>
 @endsection

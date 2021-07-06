@@ -12,7 +12,8 @@
 			<div class="bg-light p-5 shadow rounded">
 				<h1 class="mb-0">{{ $project->title }}</h1>
 				@if($project->category_id)
-					<a class="badge badge-pill badge-secondary mb-1" href="{{ route('categories.show', $project->category) }}">{{ $project->category->name }}</a>
+					<a class="badge badge-pill badge-secondary mb-1" href="{{ route('categories.show', $project->category) }}">{{ $project->category->name }}
+					</a>
 				@endif
 				<p class="text-secondary">
 					{{ $project->description }}
@@ -23,19 +24,23 @@
 				<div class="d-flex justify-content-between align-items-center">
 					<a href="{{ route('projects.index') }}">Volver</a>
 					<div class="btn-group btn-group-sm">
-						@auth
+						@can('update', $project)
 							<a class="btn btn-primary" href="{{ route('projects.edit', $project) }}">
 								@lang('Edit')
 							</a>
+						@endcan
+						@can('forceDelete', $project)
 							<a class="btn btn-danger" href="#" onclick="document.getElementById('deleteProject').submit();">
 								@lang('Delete')
 							</a>
-						@endauth
+						@endcan
+					</div>
+					@can('forceDelete', $project)
 						<form id="deleteProject" class="d-none" method="POST" action="{{ route('projects.destroy', $project) }}">
-							@csrf
-							@method('DELETE')
-						</form>	
-					</div>	
+								@csrf
+								@method('DELETE')
+						</form>
+					@endcan
 				</div>
 			</div>
 		</div>
